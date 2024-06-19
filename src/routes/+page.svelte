@@ -15,6 +15,7 @@
 				<Table.Row>
 					<Table.Head class="w-[100px]">ID</Table.Head>
 					<Table.Head>Name</Table.Head>
+					<Table.Head>Controls</Table.Head>
 				</Table.Row>
 			</Table.Header>
 			<Table.Body>
@@ -22,6 +23,9 @@
 					<Table.Row>
 						<Table.Cell class="font-medium">{user.id}</Table.Cell>
 						<Table.Cell>{user.name}</Table.Cell>
+						<Table.Cell>
+							<a href="/user/{user.id}">Edit</a>
+						</Table.Cell>
 					</Table.Row>
 				{/each}
 			</Table.Body>
