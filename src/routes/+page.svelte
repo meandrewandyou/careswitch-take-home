@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Table from '$lib/components/ui/table';
 
 	let { data } = $props();
@@ -10,11 +12,13 @@
 			Welcome to the Careswitch take-home assignment! If you followed the quickstart guide in the
 			README, you should see the table below populated with the seeded users:
 		</p>
+		<h2>Users:</h2>
 		<Table.Root>
 			<Table.Header>
 				<Table.Row>
 					<Table.Head class="w-[100px]">ID</Table.Head>
 					<Table.Head>Name</Table.Head>
+					<Table.Head>Workspaces</Table.Head>
 					<Table.Head>Controls</Table.Head>
 				</Table.Row>
 			</Table.Header>
@@ -24,12 +28,63 @@
 						<Table.Cell class="font-medium">{user.id}</Table.Cell>
 						<Table.Cell>{user.name}</Table.Cell>
 						<Table.Cell>
+							{#if user.workspaces.length > 0}
+								<ul>
+									{#each user.workspaces as workspace (workspace.id)}
+										<li>{workspace.name}</li>
+									{/each}
+								</ul>
+							{:else}
+								<p>Not a member of a workspace</p>
+							{/if}
+						</Table.Cell>
+						<Table.Cell>
 							<a href="/user/{user.id}">Edit</a>
 						</Table.Cell>
 					</Table.Row>
 				{/each}
 			</Table.Body>
 		</Table.Root>
+		<form method="POST" use:enhance action="?/createUser">
+			<Button type="submit">Add random user</Button>
+		</form>
+
+		<h2>Workspaces:</h2>
+		<Table.Root>
+			<Table.Header>
+				<Table.Row>
+					<Table.Head class="w-[100px]">ID</Table.Head>
+					<Table.Head>Name</Table.Head>
+					<Table.Head>Members</Table.Head>
+					<Table.Head>Controls</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
+				{#each data.workspaces as workspace (workspace.id)}
+					<Table.Row>
+						<Table.Cell class="font-medium">{workspace.id}</Table.Cell>
+						<Table.Cell>{workspace.name}</Table.Cell>
+						<Table.Cell>
+							{#if workspace.users.length > 0}
+								<ul>
+									{#each workspace.users as user (user.id)}
+										<li>{user.name}</li>
+									{/each}
+								</ul>
+							{:else}
+								<p>Have no members</p>
+							{/if}
+						</Table.Cell>
+						<Table.Cell>
+							<a href="/workspace/{workspace.id}">Manage</a>
+						</Table.Cell>
+					</Table.Row>
+				{/each}
+			</Table.Body>
+		</Table.Root>
+		<form method="POST" use:enhance action="?/createWorkspace">
+			<Button type="submit">Add random workspace</Button>
+		</form>
 		<div>
 			Your assignment is to use all the libraries and tools already set up in this project to build
 			a simple user management interface. You can use the table above as a starting point, but you

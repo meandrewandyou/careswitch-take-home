@@ -14,11 +14,11 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" use:enhance action="?/updateProfile">
 	<Form.Field {form} name="name">
 		<Form.Control let:attrs>
 			<Form.Label>Username</Form.Label>
-			<Input placeholder="3-10 characters" {...attrs} bind:value={$formData.name} />
+			<Input class="w-max" placeholder="3-10 characters" {...attrs} bind:value={$formData.name} />
 		</Form.Control>
 		<Form.Description>Your name.</Form.Description>
 		<Form.FieldErrors />

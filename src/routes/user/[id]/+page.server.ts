@@ -1,19 +1,18 @@
 import type { PageServerLoad, Actions } from './$types.js';
 import { prisma } from '$lib/server/db';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async () => {
 	return {
-		form: await superValidate(zod(formSchema)),
-		user: await prisma.user.findUnique({ where: { id: params.id } })
+		form: await superValidate(zod(formSchema))
 	};
 };
 
 export const actions: Actions = {
-	default: async ({ request, params }) => {
+	updateProfile: async ({ request, params }) => {
 		const form = await superValidate(request, zod(formSchema));
 		if (!form.valid) {
 			return fail(400, {
@@ -29,5 +28,13 @@ export const actions: Actions = {
 				name: form.data.name
 			}
 		});
+	},
+	deleteProfile: async ({ params }) => {
+		await prisma.user.delete({
+			where: {
+				id: params.id
+			}
+		});
+		redirect(303, '/');
 	}
 };
