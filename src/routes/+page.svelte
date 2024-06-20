@@ -11,14 +11,14 @@
 		<p>
 			🍾 Short message in the bottle. This is just a CRUD demo app, with no styling. Want to mention
 			that almost every lib and tool used in this project - I used for the first time. Exept Svelte
-			itself. So everything that implemented not that pretty and likely could be done better, but
+			itself. So everything that implemented is not that pretty and likely could be done better, but
 			it's a matter of practice anyway. Overall - to make the interface user friendly won't be a
 			problem, it just will take some extra time, and I simply don't know how much time do I have))
 			If I have some - please let me know.
 		</p>
 		<p>
 			About forms. I used Shadcn Form + Superform validation here only in one case - editing
-			username) Other form actions that implemented I believe will be just good with what Svelte
+			username. Other form actions that implemented I believe will be just fine with what Svelte
 			already has. I'd like to extend the user schema and keep on experimenting with validations and
 			stuff, but again, matter of time.
 		</p>
